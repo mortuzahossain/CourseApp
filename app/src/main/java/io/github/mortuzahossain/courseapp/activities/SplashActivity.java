@@ -9,6 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.github.mortuzahossain.courseapp.R;
+import io.github.mortuzahossain.courseapp.utils.Navigator;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -20,9 +21,9 @@ public class SplashActivity extends AppCompatActivity {
         TimerTask showSplash = new TimerTask() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, CourseListActivity.class));
+                Navigator.goToActivityForwardFinish(SplashActivity.this, CourseListActivity.class);
             }
         };
-        timer.schedule(showSplash, 1500);
+        timer.schedule(showSplash, 500);
     }
 }

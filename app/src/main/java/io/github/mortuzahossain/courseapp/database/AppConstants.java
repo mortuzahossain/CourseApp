@@ -9,6 +9,6 @@ package io.github.mortuzahossain.courseapp.database;
 
 
 public class AppConstants {
-    public static String BASE_URL = "";
+    public static String BASE_URL = "https://raw.githubusercontent.com/Mahboobaust/api/master/";
     public static String VIDEO_ID = "VIDEO_ID";
 }
