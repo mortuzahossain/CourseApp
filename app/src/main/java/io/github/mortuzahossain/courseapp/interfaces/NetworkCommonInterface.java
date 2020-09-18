@@ -1,4 +1,4 @@
-package io.github.mortuzahossain.courseapp.network.interfaces;
+package io.github.mortuzahossain.courseapp.interfaces;
 /*
  * Created by mortuza on 30/5/20 | 9:34 PM for FloraEkyc
  * Junior Programmer

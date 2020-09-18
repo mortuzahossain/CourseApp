@@ -1,4 +1,4 @@
-package io.github.mortuzahossain.courseapp.network.presenter;
+package io.github.mortuzahossain.courseapp.presenter;
 /*
  * Created by mortuza on 17/9/20 | 2:56 PM for CourseApp
  * Junior Programmer
@@ -8,49 +8,33 @@ package io.github.mortuzahossain.courseapp.network.presenter;
  * */
 
 
-import android.content.Context;
-import android.widget.Toast;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.List;
-
 import io.github.mortuzahossain.courseapp.base.BaseApplication;
 import io.github.mortuzahossain.courseapp.network.APIInstance;
-import io.github.mortuzahossain.courseapp.network.interfaces.CourseInterfaces;
-import io.github.mortuzahossain.courseapp.network.model.CourseListResponse;
+import io.github.mortuzahossain.courseapp.interfaces.VideoPlaylistInterfaces;
+import io.github.mortuzahossain.courseapp.model.VideoListResponse;
 import io.github.mortuzahossain.courseapp.utils.NetworkAvailability;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CoursePresenter {
+public class VideoPlaylistPresenter {
 
-    public CourseInterfaces.view view;
+    VideoPlaylistInterfaces.view view;
 
-    public CoursePresenter(CourseInterfaces.view view) {
+    public VideoPlaylistPresenter(VideoPlaylistInterfaces.view view) {
         this.view = view;
     }
 
-    public void getCourse() {
+    public void getCourseList(String path) {
         if (NetworkAvailability.isNetworkAvailable(BaseApplication.APP_CONTEXT) && NetworkAvailability.isOnline(BaseApplication.APP_CONTEXT)) {
             view.showLoading();
-            APIInstance.getAPIService().getCourseLists().enqueue(new Callback<List<CourseListResponse>>() {
+            APIInstance.getAPIService().getVideoLists(path).enqueue(new Callback<VideoListResponse>() {
                 @Override
-                public void onResponse(Call<List<CourseListResponse>> call, Response<List<CourseListResponse>> response) {
+                public void onResponse(Call<VideoListResponse> call, Response<VideoListResponse> response) {
                     view.hideLoading();
                     try {
                         if (response.isSuccessful() && response.body() != null) {
-                            if (response.body().size() > 0) {
-                                view.showSuccess(response.body());
-                            } else {
-                                view.showFailed("No Data Found");
-                            }
+                            view.showSuccess(response.body());
                         } else {
                             view.showFailed("No Data Found");
                         }
@@ -61,7 +45,7 @@ public class CoursePresenter {
                 }
 
                 @Override
-                public void onFailure(Call<List<CourseListResponse>> call, Throwable t) {
+                public void onFailure(Call<VideoListResponse> call, Throwable t) {
                     view.hideLoading();
                     view.showFailed(t.getLocalizedMessage());
                 }

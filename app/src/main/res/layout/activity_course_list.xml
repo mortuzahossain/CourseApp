@@ -45,8 +45,17 @@
                 android:text="Retry" />
         </LinearLayout>
 
+        <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_home_footer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <com.baoyz.widget.PullRefreshLayout
-            android:visibility="gone"
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -57,6 +66,7 @@
                 android:layout_height="match_parent" />
 
         </com.baoyz.widget.PullRefreshLayout>
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

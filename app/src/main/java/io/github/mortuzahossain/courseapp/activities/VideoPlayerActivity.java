@@ -8,6 +8,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
@@ -19,7 +24,7 @@ import io.github.mortuzahossain.courseapp.utils.YoutubeConfig;
 
 import static io.github.mortuzahossain.courseapp.database.AppConstants.VIDEO_ID;
 
-public class VideoPlayerActivity extends AppCompatActivity {
+public class VideoPlayerActivity extends YouTubeBaseActivity {
 
     @BindView(R.id.youtubePlayer) YouTubePlayerView youtubePlayer;
 
@@ -36,7 +41,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         String videoId = getIntent().getStringExtra(VIDEO_ID);
-
         YouTubePlayer.OnInitializedListener onInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
@@ -51,7 +55,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
             }
         };
 
-        youtubePlayer.initialize(YoutubeConfig.getApiKey(),onInitializedListener);
+        youtubePlayer.initialize(YoutubeConfig.getApiKey(), onInitializedListener);
 
     }
+
 }

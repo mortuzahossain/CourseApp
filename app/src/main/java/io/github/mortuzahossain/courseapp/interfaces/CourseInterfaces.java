@@ -1,4 +1,4 @@
-package io.github.mortuzahossain.courseapp.network.interfaces;
+package io.github.mortuzahossain.courseapp.interfaces;
 /*
  * Created by mortuza on 17/9/20 | 3:00 PM for CourseApp
  * Junior Programmer
@@ -10,7 +10,7 @@ package io.github.mortuzahossain.courseapp.network.interfaces;
 
 import java.util.List;
 
-import io.github.mortuzahossain.courseapp.network.model.CourseListResponse;
+import io.github.mortuzahossain.courseapp.model.CourseListResponse;
 
 public interface CourseInterfaces {
     interface view extends NetworkCommonInterface{

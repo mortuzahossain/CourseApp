@@ -25,6 +25,7 @@ public class DialogUtils {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.loader_layout);
+        dialog.setCancelable(false);
         return dialog;
     }
 }

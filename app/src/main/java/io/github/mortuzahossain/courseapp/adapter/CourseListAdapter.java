@@ -8,7 +8,9 @@ package io.github.mortuzahossain.courseapp.adapter;
  * */
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +28,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.mortuzahossain.courseapp.R;
-import io.github.mortuzahossain.courseapp.activities.VideoPlayerActivity;
 import io.github.mortuzahossain.courseapp.activities.VideoPlaylistActivity;
-import io.github.mortuzahossain.courseapp.network.model.CourseListResponse;
-import io.github.mortuzahossain.courseapp.utils.Navigator;
+import io.github.mortuzahossain.courseapp.database.AppConstants;
+import io.github.mortuzahossain.courseapp.model.CourseListResponse;
 
 
 public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.CourseListViewHolder> {
@@ -63,7 +64,11 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Co
 
         holder.itemView.setOnClickListener(view -> {
             if (model.isIsAvailable()) {
-                Navigator.goToActivityForward(context, VideoPlaylistActivity.class);
+                Intent intent = new Intent(context, VideoPlaylistActivity.class);
+                intent.putExtra(AppConstants.COURSE_TITLE, model.getTitle());
+                intent.putExtra(AppConstants.COURSE_URL, model.getCourseListUrl());
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
             } else {
                 Toast.makeText(context, "Course Not Available", Toast.LENGTH_SHORT).show();
             }

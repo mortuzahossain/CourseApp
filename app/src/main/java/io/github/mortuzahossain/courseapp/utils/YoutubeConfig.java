@@ -12,7 +12,7 @@ public class YoutubeConfig {
     public YoutubeConfig() {
     }
 
-    public static final String API_KEY = "AIzaSyAt2JM771VB4bTO-MspEC_BP-4UGT_2R1A";
+    public static final String API_KEY = "AIzaSyAgKuEhrr_WbqzIK_BXbFqupVzBWsPS4qs";
 
     public static String getApiKey(){
         return API_KEY;

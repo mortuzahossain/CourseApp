@@ -3,18 +3,23 @@
     package="io.github.mortuzahossain.courseapp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activities.VideoPlayerActivity"/>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activities.AboutUsActivity" />
+        <activity android:name=".activities.ContactUsActivity" />
+        <activity android:name=".activities.FaqActivity" />
+        <activity
+            android:name=".activities.VideoPlayerActivity"
+            android:screenOrientation="landscape" />
         <activity android:name=".activities.VideoPlaylistActivity" />
         <activity android:name=".activities.CourseListActivity" />
         <activity android:name=".activities.SplashActivity">
@@ -24,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-1791737625311539~5654063076" />
     </application>
 
 </manifest>

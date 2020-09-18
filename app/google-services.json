@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "806100470152",
+    "firebase_url": "https://courseapp-a59a0.firebaseio.com",
+    "project_id": "courseapp-a59a0",
+    "storage_bucket": "courseapp-a59a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806100470152:android:0a10fb618affcbe8b3123d",
+        "android_client_info": {
+          "package_name": "io.github.mortuzahossain.courseapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806100470152-rbenhft7bn7nvlphnuat63b7vggle0d0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgKuEhrr_WbqzIK_BXbFqupVzBWsPS4qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806100470152-rbenhft7bn7nvlphnuat63b7vggle0d0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

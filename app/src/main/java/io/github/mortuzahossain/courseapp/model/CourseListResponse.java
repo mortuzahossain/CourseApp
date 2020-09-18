@@ -1,4 +1,4 @@
-package io.github.mortuzahossain.courseapp.network.model;
+package io.github.mortuzahossain.courseapp.model;
 
 import com.google.gson.annotations.SerializedName;
 

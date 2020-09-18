@@ -19,13 +19,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.baoyz.widget.PullRefreshLayout;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.internal.NavigationMenuView;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -33,9 +37,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.mortuzahossain.courseapp.R;
 import io.github.mortuzahossain.courseapp.adapter.CourseListAdapter;
-import io.github.mortuzahossain.courseapp.network.interfaces.CourseInterfaces;
-import io.github.mortuzahossain.courseapp.network.model.CourseListResponse;
-import io.github.mortuzahossain.courseapp.network.presenter.CoursePresenter;
+import io.github.mortuzahossain.courseapp.interfaces.CourseInterfaces;
+import io.github.mortuzahossain.courseapp.model.CourseListResponse;
+import io.github.mortuzahossain.courseapp.presenter.CoursePresenter;
 import io.github.mortuzahossain.courseapp.utils.DialogUtils;
 import io.github.mortuzahossain.courseapp.utils.Navigator;
 
@@ -53,11 +57,10 @@ public class CourseListActivity extends AppCompatActivity implements NavigationV
     @BindView(R.id.drawerLayout) DrawerLayout drawerLayout;
 
     CourseListAdapter adapter;
-    List<CourseListResponse> courseListResponses = new ArrayList<>();
-
     Dialog progressDialog;
     CoursePresenter presenter;
-
+    @BindView(R.id.adView) AdView adView;
+    InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,45 @@ public class CourseListActivity extends AppCompatActivity implements NavigationV
 
         presenter.getCourse();
         swipeRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
-        swipeRefreshLayout.setOnRefreshListener(() -> presenter.getCourse());
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            }
+            presenter.getCourse();
+        });
+
+
+        // FOR ADMOB
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+            }
+        });
+        adView.loadAd(adRequest);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-1791737625311539/4561307405");
+        mInterstitialAd.loadAd(adRequest);
+        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
+            adRequest = new AdRequest.Builder().build();
+            mInterstitialAd.loadAd(adRequest);
+        }
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                mInterstitialAd.loadAd(new AdRequest.Builder().build());
+            }
+        });
+
     }
 
     @Override
@@ -91,13 +132,13 @@ public class CourseListActivity extends AppCompatActivity implements NavigationV
         new Handler().postDelayed(() -> {
             switch (id) {
                 case R.id.about_us:
-                    //Navigator.goToActivityForward(this, AboutUsActivity.class);
+                    Navigator.goToActivityForward(this, AboutUsActivity.class);
                     break;
                 case R.id.faq:
-                    //Navigator.goToActivityForward(this, FaqActivity.class);
+                    Navigator.goToActivityForward(this, FaqActivity.class);
                     break;
                 case R.id.contact:
-                    //Navigator.goToActivityForward(this, ContactUsActivity.class);
+                    Navigator.goToActivityForward(this, ContactUsActivity.class);
                     break;
 
                 default:
@@ -115,7 +156,11 @@ public class CourseListActivity extends AppCompatActivity implements NavigationV
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -154,6 +199,30 @@ public class CourseListActivity extends AppCompatActivity implements NavigationV
         swipeRefreshLayout.setVisibility(View.GONE);
         errorText.setText("No Internet Connection");
         errorImage.setImageResource(R.drawable.no_wifi);
+    }
+
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onDestroy();
     }
 
     @OnClick(R.id.btnRetry)
